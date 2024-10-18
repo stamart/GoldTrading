@@ -75,11 +75,10 @@ public class TradeService implements TradeServiceInterface {
    * price.
    */
   private int getBestProfitOnDay(int numberOfDays, int buyDay, int minPrice) {
-    int bestSellDay = IntStream.range(buyDay + 1, numberOfDays)
+    return IntStream.range(buyDay + 1, numberOfDays)
         .map(sellDay -> api.getPriceOnDay(sellDay) - minPrice)
         .max()
         .orElse(Integer.MIN_VALUE);
-    return bestSellDay;
   }
 
   /**
