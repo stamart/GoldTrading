@@ -72,5 +72,4 @@ This output represents the decision not to buy because prices are constantly dec
 - The application is designed to select the optimal buy and sell days to achieve the highest possible profit. In scenarios where prices are continually declining, the application will decide not to make a purchase to avoid unnecessary losses.
 - The `TradeApiCaller` is responsible for generating random prices, and thus the results may vary each time the program is run.
 - If the best day to buy turns out to be the last day in the series, the algorithm will adjust to avoid buying on that day since it would prevent any opportunity to sell and make a profit.&#x20;
-- The `TradeApiCaller` is responsible for generating random prices, and thus the results may vary each time the program is run.
 
