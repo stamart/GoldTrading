@@ -1,6 +1,7 @@
 package org.gold;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -88,7 +89,7 @@ public class TradeApiCaller {
       System.out.println("Profit: " + (getPriceOnDay(sellDay) - getPriceOnDay(buyDay)));
 
     } catch (IllegalArgumentException e) {
-      System.out.println("There is no gold to sell. Sorry :(");
+      System.out.println("There is no gold to sell.");
     }
   }
 

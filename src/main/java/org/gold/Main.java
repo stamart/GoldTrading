@@ -1,15 +1,17 @@
 package org.gold;
 
 import org.gold.trade.TradeService;
+import org.gold.trade.TradeServiceInterface;
 
 public class Main {
 
   public static void main(String[] args) {
     TradeApiCaller tradeApiCaller = new TradeApiCaller();
-    TradeService tradeService = new TradeService(tradeApiCaller);
 
-    int buyDay = tradeService.getBuyDay();
-    int sellDay = tradeService.getSellDay();
+    TradeServiceInterface tradeServiceInterface = new TradeService(tradeApiCaller);
+
+    int buyDay = tradeServiceInterface.getBuyDay();
+    int sellDay = tradeServiceInterface.getSellDay();
 
     tradeApiCaller.printTradeDetails(buyDay, sellDay);
 

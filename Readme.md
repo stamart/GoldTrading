@@ -57,15 +57,15 @@ This output represents the decision to buy on day 2 (price 3) and sell on day 5 
 - The selected buy day and price.
 - The selected sell day and price.
 
-## Example Output
+## Example Output for not possible profit scenario
 
 ```
-Prices: [5, 3, 8, 7, 10, 6]
-Buy day (2): 3
-Sell day (5): 10
+Prices: [10, 9, 8, 7, 6, 5]
+Buy day: There was no day to sell gold. Profit is not possible
+There is no gold to sell.
 ```
 
-This output represents the decision to buy on day 2 (price 3) and sell on day 4 (price 10), with the goal of maximizing profit.
+This output represents the decision not to buy because prices are constantly decreasing and no profit is possible.
 
 ## Key Considerations
 
