@@ -75,10 +75,13 @@ public class TradeApiCaller {
     if (currentPrices == null) {
       throw new IllegalStateException("No price list selected");
     }
+    System.out.println("Info:Buy day and Sell day are counted from 1");
     System.out.println("Prices: " + currentPrices);
-    System.out.println("Buy day (" + buyDay + "): " + getPriceOnDay(buyDay));
+    System.out.println("Buy day (" + (buyDay+1) + "): " + getPriceOnDay(buyDay));
     try {
-      System.out.println("Sell day (" + sellDay + "): " + getPriceOnDay(sellDay));
+      System.out.println("Sell day (" + (sellDay+1) + "): " + getPriceOnDay(sellDay));
+      System.out.println("Profit: "  + (getPriceOnDay(sellDay) - getPriceOnDay(buyDay)));
+
     } catch (IllegalArgumentException e) {
       System.out.println("Sell day: There were no day to sell gold");
     }
