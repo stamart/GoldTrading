@@ -25,43 +25,25 @@ public class TradeService implements TradeServiceInterface {
    */
   @Override
   public int getBuyDay() {
-    if (noProfitPossible()) {
+    int numberOfDays = api.getNumberOfDays();
+    if (numberOfDays <= 1 || noProfitPossible()) {
       return -1;
     }
 
-    int numberOfDays = api.getNumberOfDays();
     int maxProfit = Integer.MIN_VALUE;
     int bestBuyDay = -1;
 
-
     for (int buyDay = 0; buyDay < numberOfDays - 1; buyDay++) {
-      for (int sellDay = buyDay + 1; sellDay < numberOfDays; sellDay++) {
-        int profit = api.getPriceOnDay(sellDay) - api.getPriceOnDay(buyDay);
-        if (profit > maxProfit) {
-          maxProfit = profit;
-          bestBuyDay = buyDay;
-        }
+      int minPrice = api.getPriceOnDay(buyDay);
+
+      int bestSellDayProfit = getBestProfitOnDay(numberOfDays, buyDay, minPrice);
+
+      if (bestSellDayProfit > maxProfit) {
+        maxProfit = bestSellDayProfit;
+        bestBuyDay = buyDay;
       }
     }
-
     return bestBuyDay;
-
-  }
-
-  /**
-   * This method determinate case where prices constantly are decreasing, In that case best possible
-   * * way to minimize loss is not to buy
-   */
-  private boolean noProfitPossible() {
-    boolean alwaysDecreasing = true;
-    for (int i = 1; i < api.getNumberOfDays(); i++) {
-      if (api.getPriceOnDay(i) >= api.getPriceOnDay(i - 1)) {
-        alwaysDecreasing = false;
-        break;
-      }
-    }
-    return alwaysDecreasing;
-
   }
 
   /**
@@ -85,7 +67,33 @@ public class TradeService implements TradeServiceInterface {
         .max(Comparator.comparingInt(
             day -> api.getPriceOnDay(day) - api.getPriceOnDay(buyDay))) /** Maximize profit*/
         .orElse(-1);/** If no better day is found, sell the next day*/
-
   }
 
+  /**
+   * Helper method used to determine the maximum profit for a specific buy day. It iterates through
+   * subsequent days and calculates the profit by comparing the buy day price with each sell day
+   * price.
+   */
+  private int getBestProfitOnDay(int numberOfDays, int buyDay, int minPrice) {
+    int bestSellDay = IntStream.range(buyDay + 1, numberOfDays)
+        .map(sellDay -> api.getPriceOnDay(sellDay) - minPrice)
+        .max()
+        .orElse(Integer.MIN_VALUE);
+    return bestSellDay;
+  }
+
+  /**
+   * This method determinate case where prices constantly are decreasing, In that case the best
+   * possible way to minimize loss is not to buy
+   */
+  private boolean noProfitPossible() {
+    boolean alwaysDecreasing = true;
+    for (int i = 1; i < api.getNumberOfDays(); i++) {
+      if (api.getPriceOnDay(i) >= api.getPriceOnDay(i - 1)) {
+        alwaysDecreasing = false;
+        break;
+      }
+    }
+    return alwaysDecreasing;
+  }
 }

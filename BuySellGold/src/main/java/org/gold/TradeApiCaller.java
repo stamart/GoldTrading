@@ -1,7 +1,6 @@
 package org.gold;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -27,8 +26,8 @@ public class TradeApiCaller {
     List<List<Integer>> lists = new ArrayList<>();
     for (int i = 0; i < 5; i++) {
       List<Integer> list = new ArrayList<>();
-      for (int j = 0; j < 10 + random.nextInt(10); j++) { // Każda lista ma od 10 do 20 elementów
-        list.add(1 + random.nextInt(20)); // Ceny od 1 do 20
+      for (int j = 0; j < 10 + random.nextInt(10); j++) {
+        list.add(1 + random.nextInt(20));
       }
       lists.add(list);
     }
@@ -79,14 +78,14 @@ public class TradeApiCaller {
     System.out.println("Info:Buy day and Sell day are counted from 1");
     System.out.println("Prices: " + currentPrices);
     try {
-      System.out.println("Buy day (" + (buyDay+1) + "): " + getPriceOnDay(buyDay));
-    }catch (IllegalArgumentException e){
+      System.out.println("Buy day (" + (buyDay + 1) + "): " + getPriceOnDay(buyDay));
+    } catch (IllegalArgumentException e) {
       System.out.println("Buy day: There was no day to sell gold. Profit is not possible");
 
     }
     try {
-      System.out.println("Sell day (" + (sellDay+1) + "): " + getPriceOnDay(sellDay));
-      System.out.println("Profit: "  + (getPriceOnDay(sellDay) - getPriceOnDay(buyDay)));
+      System.out.println("Sell day (" + (sellDay + 1) + "): " + getPriceOnDay(sellDay));
+      System.out.println("Profit: " + (getPriceOnDay(sellDay) - getPriceOnDay(buyDay)));
 
     } catch (IllegalArgumentException e) {
       System.out.println("There is no gold to sell. Sorry :(");

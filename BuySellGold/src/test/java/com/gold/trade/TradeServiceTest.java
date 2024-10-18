@@ -64,7 +64,7 @@ public class TradeServiceTest {
   @Test
   public void testBestPriceToBuyInLastDays() {
     // given
-    List<Integer> prices = Arrays.asList(5, 6, 13, 20, 20, 5, 6, 15, 8, 16, 18, 1, 1, 2, 2);
+    List<Integer> prices = Arrays.asList(5, 6, 13, 20, 20, 4, 6, 15, 8, 16, 18, 1, 1, 2, 2, 1);
     when(tradeApiCaller.getNumberOfDays()).thenReturn(prices.size());
     for (int i = 0; i < prices.size(); i++) {
       when(tradeApiCaller.getPriceOnDay(i)).thenReturn(prices.get(i));

@@ -11,7 +11,7 @@ public class Main {
     int buyDay = tradeService.getBuyDay();
     int sellDay = tradeService.getSellDay();
 
-    tradeApiCaller.printTradeDetails(buyDay,sellDay);
+    tradeApiCaller.printTradeDetails(buyDay, sellDay);
 
   }
 }
