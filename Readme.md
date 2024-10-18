@@ -67,9 +67,24 @@ There is no gold to sell.
 
 This output represents the decision not to buy because prices are constantly decreasing and no profit is possible.
 
+## Running the Tests
+
+The application includes unit tests to verify the correct functionality of the buy and sell day calculations. To run the tests:
+
+1. Ensure you have a Java development environment set up (such as IntelliJ IDEA, Eclipse, or command line tools).
+2. The tests are written using JUnit. To run them from the command line, use:
+
+```
+mvn test
+```
+
+or run the tests directly from your IDE.
+
+Running the tests will provide information about different scenarios, ensuring the application handles a variety of price trends correctly.
+
+
 ## Key Considerations
 
 - The application is designed to select the optimal buy and sell days to achieve the highest possible profit. In scenarios where prices are continually declining, the application will decide not to make a purchase to avoid unnecessary losses.
 - The `TradeApiCaller` is responsible for generating random prices, and thus the results may vary each time the program is run.
 - If the best day to buy turns out to be the last day in the series, the algorithm will adjust to avoid buying on that day since it would prevent any opportunity to sell and make a profit.&#x20;
-
