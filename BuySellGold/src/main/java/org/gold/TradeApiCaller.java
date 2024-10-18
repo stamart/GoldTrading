@@ -1,6 +1,7 @@
 package org.gold;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -77,13 +78,18 @@ public class TradeApiCaller {
     }
     System.out.println("Info:Buy day and Sell day are counted from 1");
     System.out.println("Prices: " + currentPrices);
-    System.out.println("Buy day (" + (buyDay+1) + "): " + getPriceOnDay(buyDay));
+    try {
+      System.out.println("Buy day (" + (buyDay+1) + "): " + getPriceOnDay(buyDay));
+    }catch (IllegalArgumentException e){
+      System.out.println("Buy day: There was no day to sell gold. Profit is not possible");
+
+    }
     try {
       System.out.println("Sell day (" + (sellDay+1) + "): " + getPriceOnDay(sellDay));
       System.out.println("Profit: "  + (getPriceOnDay(sellDay) - getPriceOnDay(buyDay)));
 
     } catch (IllegalArgumentException e) {
-      System.out.println("Sell day: There were no day to sell gold");
+      System.out.println("There is no gold to sell. Sorry :(");
     }
   }
 
