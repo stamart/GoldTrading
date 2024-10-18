@@ -18,17 +18,50 @@ public class TradeService implements TradeServiceInterface {
   }
 
   /**
-   * Finds the best day to buy silver by looking for the minimum price.
+   * Finds the optimal day to sell to either maximize profit or minimize loss. If no profit is
+   * possible, it will not perform a purchase or sale.
    *
    * @return the day (index) with the lowest price, or -1 if no prices are available
    */
   @Override
   public int getBuyDay() {
-    Integer integer = IntStream.range(0, api.getNumberOfDays()) /** Browse day indices */
-        .boxed()
-        .min(Comparator.comparingInt(api::getPriceOnDay)) /** Find the day with the lowest price*/
-        .orElse(-1); /** Return -1 if the price list is empty*/
-        return integer;
+    if (noProfitPossible()) {
+      return -1;
+    }
+
+    int numberOfDays = api.getNumberOfDays();
+    int maxProfit = Integer.MIN_VALUE;
+    int bestBuyDay = -1;
+
+
+    for (int buyDay = 0; buyDay < numberOfDays - 1; buyDay++) {
+      for (int sellDay = buyDay + 1; sellDay < numberOfDays; sellDay++) {
+        int profit = api.getPriceOnDay(sellDay) - api.getPriceOnDay(buyDay);
+        if (profit > maxProfit) {
+          maxProfit = profit;
+          bestBuyDay = buyDay;
+        }
+      }
+    }
+
+    return bestBuyDay;
+
+  }
+
+  /**
+   * This method determinate case where prices constantly are decreasing, In that case best possible
+   * * way to minimize loss is not to buy
+   */
+  private boolean noProfitPossible() {
+    boolean alwaysDecreasing = true;
+    for (int i = 1; i < api.getNumberOfDays(); i++) {
+      if (api.getPriceOnDay(i) >= api.getPriceOnDay(i - 1)) {
+        alwaysDecreasing = false;
+        break;
+      }
+    }
+    return alwaysDecreasing;
+
   }
 
   /**
@@ -39,19 +72,19 @@ public class TradeService implements TradeServiceInterface {
   @Override
   public int getSellDay() {
     int buyDay = getBuyDay();
-    int liczbaDni = api.getNumberOfDays();
+    int numbersOfDays = api.getNumberOfDays();
 
-    if (liczbaDni <= 1) {
+    if (numbersOfDays <= 1 || buyDay == -1) {
       return -1; /** No possibility to sell*/
     }
 
     /** Maximizing profit or minimizing loss*/
     return IntStream
-        .range(buyDay + 1, liczbaDni) /** Browse days after the buy day*/
+        .range(buyDay + 1, numbersOfDays) /** Browse days after the buy day*/
         .boxed() /** Cast primitive int to Integer*/
         .max(Comparator.comparingInt(
             day -> api.getPriceOnDay(day) - api.getPriceOnDay(buyDay))) /** Maximize profit*/
-        .orElse(- 1);/** If no better day is found, sell the next day*/
+        .orElse(-1);/** If no better day is found, sell the next day*/
 
   }
 

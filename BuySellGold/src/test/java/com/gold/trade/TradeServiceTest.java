@@ -1,6 +1,7 @@
 package com.gold.trade;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
@@ -57,7 +58,27 @@ public class TradeServiceTest {
     int sellDay = tradeService.getSellDay();
 
     // then
-    assertTrue(sellDay == - 1); // Ensure sell is done the next day when no profit can be made
+    assertTrue(sellDay == -1); // Ensure sell is done the next day when no profit can be made
+  }
+
+  @Test
+  public void testBestPriceToBuyInLastDays() {
+    // given
+    List<Integer> prices = Arrays.asList(5, 6, 13, 20, 20, 5, 6, 15, 8, 16, 18, 1, 1, 2, 2);
+    when(tradeApiCaller.getNumberOfDays()).thenReturn(prices.size());
+    for (int i = 0; i < prices.size(); i++) {
+      when(tradeApiCaller.getPriceOnDay(i)).thenReturn(prices.get(i));
+    }
+    TradeService tradeService = new TradeService(tradeApiCaller);
+
+    // when
+    int buyDay = tradeService.getBuyDay();
+    int sellDay = tradeService.getSellDay();
+
+    // then
+    assertEquals(0, buyDay);  // Buy on the first day
+    assertEquals(3, sellDay); // Sell on the next day
+    assertFalse(sellDay == -1); // Ensure sell is done the next day when no profit can be made
   }
 
   @Test
@@ -73,7 +94,8 @@ public class TradeServiceTest {
     int sellDay = tradeService.getSellDay();
 
     // then
-    assertTrue(sellDay == -1 && buyDay == 0); // Ensure sell is not possible when there is only one day
+    assertTrue(
+        sellDay == -1 && buyDay == -1); // Ensure sell is not possible when there is only one day
   }
 
   @Test
