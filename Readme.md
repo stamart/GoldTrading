@@ -14,7 +14,7 @@ The Trade Application is a Java-based system designed to determine the best days
 2. The `TradeService` uses these generated prices to determine the best day to buy and sell based on the following conditions:
     - Buy at the lowest possible price.
     - Sell at the day with the highest profit after buying.
-    - If prices are continually falling, the application will not make a purchase. In This case I assume the best way is not to make any profit then minimize the loss.
+    - IMPORTANT: If prices are constantly falling, the app will not make a purchase. In this case, I assume that it is better to not make a profit than to minimize losses. Considering that the task description stated "You know how the price varies over time" I decided that this approach would be the best solution. However, I realize that it was possible to make a purchase and then recalculate the lowest possible loss.
 3. The `Main` class runs the program, prints all generated prices, the selected buy day, and the sell day, providing a summary of the decision.
 
 ## Key Classes and Methods
