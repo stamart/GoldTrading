@@ -66,7 +66,7 @@ public class TradeService implements TradeServiceInterface {
         .boxed() /** Cast primitive int to Integer*/
         .max(Comparator.comparingInt(
             day -> api.getPriceOnDay(day) - api.getPriceOnDay(buyDay))) /** Maximize profit*/
-        .orElse(-1);/** If no better day is found, sell the next day*/
+        .orElse(-1);/** Set special value if sell is not possible */
   }
 
   /**
