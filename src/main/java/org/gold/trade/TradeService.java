@@ -60,13 +60,13 @@ public class TradeService implements TradeServiceInterface {
       return -1; /** No possibility to sell*/
     }
 
-    /** Maximizing profit or minimizing loss*/
+    /* Maximizing profit or minimizing loss*/
     return IntStream
-        .range(buyDay + 1, numbersOfDays) /** Browse days after the buy day*/
-        .boxed() /** Cast primitive int to Integer*/
+        .range(buyDay + 1, numbersOfDays) /* Browse days after the buy day*/
+        .boxed() /* Cast primitive int to Integer*/
         .max(Comparator.comparingInt(
-            day -> api.getPriceOnDay(day) - api.getPriceOnDay(buyDay))) /** Maximize profit*/
-        .orElse(-1);/** Set special value if sell is not possible */
+            day -> api.getPriceOnDay(day) - api.getPriceOnDay(buyDay))) /* Maximize profit*/
+        .orElse(-1);/* Set special value if sell is not possible */
   }
 
   /**
